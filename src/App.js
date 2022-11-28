@@ -37,12 +37,21 @@ function App() {
   console.log(pokemon);
   return (
     <div className="App">
-      {pokemon.map((poke) => (
-        <div key={poke.id}>
-          <img src={poke.sprites.front_default} />
-          <p>{poke.name}</p>
-        </div>
-      ))}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          padding: 50,
+        }}
+      >
+        {pokemon.map((poke) => (
+          <div key={poke.id} style={{ width: 200 }}>
+            <img src={poke.sprites.front_default} />
+            <p style={{ textTransform: "capitalize" }}>{poke.name}</p>
+          </div>
+        ))}
+      </div>
       <button onClick={onClickMore}>Load more</button>
     </div>
   );
