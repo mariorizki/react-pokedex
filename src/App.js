@@ -1,13 +1,14 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { useEffect, useState } from "react";
+import logo from './logo.svg';
+import './App.css';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
   const [offset, setOffset] = useState(0);
+  const [search, setSearch] = useState('');
 
   const getPokemon = async () => {
-    const baseUrl = "https://pokeapi.co/api/v2/pokemon/";
+    const baseUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
     const res = await fetch(`${baseUrl}?offset=${offset}&limit=20`);
 
@@ -26,6 +27,27 @@ function App() {
     setPokemon([...pokemon, ...results]);
   };
 
+  const searchPokemon = async (pokemon) => {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+    const response = await fetch(url);
+    return await response.json();
+  };
+
+  const onSearchHandler = async (pokemon) => {
+    if (!pokemon) {
+      return getPokemon();
+    }
+
+    const result = await searchPokemon(pokemon);
+
+    setPokemon([result]);
+  };
+
+  const onChangeHandler = (e) => {
+    setSearch(e.target.value.toLowerCase());
+  };
+  console.log(search);
+
   useEffect(() => {
     getPokemon();
   }, [offset]);
@@ -34,21 +56,22 @@ function App() {
     setOffset(offset + 50);
   };
 
-  console.log(pokemon);
   return (
     <div className="App">
+      <input type="text" onChange={onChangeHandler} />
+      <button onClick={() => onSearchHandler(search)}>Search</button>
       <div
         style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
           padding: 50,
         }}
       >
         {pokemon.map((poke) => (
           <div key={poke.id} style={{ width: 200 }}>
             <img src={poke.sprites.front_default} />
-            <p style={{ textTransform: "capitalize" }}>{poke.name}</p>
+            <p style={{ textTransform: 'capitalize' }}>{poke.name}</p>
           </div>
         ))}
       </div>
