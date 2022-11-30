@@ -1,9 +1,10 @@
 import React from "react";
+import pokedexLogo from "../images/pokedex.png";
 
 const Home = () => {
   return (
     <div>
-      <h1>Hello</h1>
+      <img src={pokedexLogo} class="mx-auto w-72 my-4" />
     </div>
   );
 };

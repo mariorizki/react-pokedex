@@ -82,14 +82,16 @@ function App() {
 
   return (
     <>
+      <AppRouter />
       <div className="App">
-        <h1 class="text-lg">Pokedex</h1>
-        <input
-          type="text"
-          onChange={onChangeHandler}
-          placeholder="Search pokemon..."
-          class="outline-none bg-slate-100 px-3 py-1 rounded-2xl my-4"
-        />
+        <form onSubmit={onSearchHandler(search)}>
+          <input
+            type="text"
+            onChange={onChangeHandler}
+            placeholder="Search pokemon..."
+            class="outline-none bg-slate-100 px-3 py-1 rounded-2xl my-4"
+          />
+        </form>
         <button
           onClick={() => onSearchHandler(search)}
           style={{ marginLeft: 4 }}
@@ -131,7 +133,6 @@ function App() {
         </div>
         {showLoadMore ? <button onClick={onClickMore}>Load more</button> : null}
       </div>
-      <AppRouter />
     </>
   );
 }
