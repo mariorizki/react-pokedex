@@ -1,6 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
+import AppRouter from "./AppRouter";
 
 const TYPE_COLOR = {
   normal: "#A8A878",
@@ -81,73 +81,58 @@ function App() {
   console.log(pokemon);
 
   return (
-    <div className="App">
-      <h1>Pokedex</h1>
-      <input
-        type="text"
-        onChange={onChangeHandler}
-        placeholder="Search pokemon..."
-      />
-      <button onClick={() => onSearchHandler(search)} style={{ marginLeft: 4 }}>
-        Search
-      </button>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          padding: 30,
-        }}
-      >
-        {pokemon.map((poke) => (
-          <div
-            key={poke.id}
-            style={{
-              width: 160,
-              margin: 5,
-              borderRadius: 12,
-              display: "flex",
-              justifyContent: "space-between",
-              padding: 15,
-              alignItems: "center",
-              flexDirection: "column",
-              background: `${TYPE_COLOR[poke.types[0].type.name]}38`,
-            }}
-            className="card"
-          >
-            <img
-              src={poke.sprites.other.dream_world.front_default}
-              loading="lazy"
+    <>
+      <div className="App">
+        <h1 class="text-lg">Pokedex</h1>
+        <input
+          type="text"
+          onChange={onChangeHandler}
+          placeholder="Search pokemon..."
+          class="outline-none bg-slate-100 px-3 py-1 rounded-2xl my-4"
+        />
+        <button
+          onClick={() => onSearchHandler(search)}
+          style={{ marginLeft: 4 }}
+        >
+          Search
+        </button>
+        <div class="flex flex-wrap p-3 justify-center gap-3">
+          {pokemon.map((poke) => (
+            <div
+              key={poke.id}
+              class="w-40 h-48 flex justify-center items-center flex-col px-2 py-5 rounded-md gap-2 cursor-pointer"
               style={{
-                width: "50%",
-                height: "50%",
+                background: `${TYPE_COLOR[poke.types[0].type.name]}38`,
               }}
-            />
-            <p style={{ textTransform: "capitalize", fontWeight: "bold" }}>
-              #{poke.id} {poke.name}
-            </p>
-            <div style={{ display: "flex", gap: 4 }}>
-              {poke.types.map((type) => (
-                <div
-                  key={type.type.name}
-                  style={{
-                    background: TYPE_COLOR[type.type.name],
-                    padding: 4,
-                    borderRadius: 6,
-                    color: "white",
-                    textTransform: "capitalize",
-                    fontSize: 12,
-                  }}
-                >
-                  {type.type.name}
-                </div>
-              ))}
+            >
+              <img
+                src={poke.sprites.other.dream_world.front_default}
+                loading="lazy"
+                class="w-[50%] h-[50%]"
+              />
+              <p class="capitalize font-medium text-slate-600">
+                #{poke.id} {poke.name}
+              </p>
+              <div style={{ display: "flex", gap: 4 }}>
+                {poke.types.map((type) => (
+                  <div
+                    key={type.type.name}
+                    class="text-xs px-4 py-1 rounded-sm text-slate-100 capitalize"
+                    style={{
+                      background: TYPE_COLOR[type.type.name],
+                    }}
+                  >
+                    {type.type.name}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        {showLoadMore ? <button onClick={onClickMore}>Load more</button> : null}
       </div>
-      {showLoadMore ? <button onClick={onClickMore}>Load more</button> : null}
-    </div>
+      <AppRouter />
+    </>
   );
 }
 
